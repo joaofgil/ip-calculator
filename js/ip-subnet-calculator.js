@@ -2,7 +2,6 @@ function gObj(obj) { return document.getElementById(obj); }
 function trimAll(sString) { return sString.trim(); }
 function isNumber(val) { val = val + ""; if (val.length < 1) return false; if (isNaN(val)) { return false; } else { return true; } }
 function isInteger(val) { if (isNumber(val)) { return val % 1 === 0; } else { return false; } }
-function formatAsMoney(num) { return formatAsMoneyFull(num, 1); }
 
 function clearForm(formObj) {
     var allElements = formObj.elements;

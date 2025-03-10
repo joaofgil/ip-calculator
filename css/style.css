@@ -1,12 +1,8 @@
 body,
-p,
 td,
 div,
 span,
-input,
-th,
-li,
-textarea {
+input {
     font-family: arial, helvetica, sans-serif;
     font-size: 16px;
     color: #000;
@@ -18,14 +14,6 @@ body {
     padding: 0px;
     border: 0;
     text-align: center;
-}
-
-p {
-    margin: 5px 0 8px 0;
-}
-
-img {
-    border: 0px;
 }
 
 h1 {
@@ -42,27 +30,6 @@ h2 {
     color: #003366;
     padding: 0;
     margin-bottom: 2px;
-}
-
-h3 {
-    font-size: 19px;
-    font-weight: bold;
-}
-
-hr {
-    border: 0;
-    color: #aaa;
-    background-color: #aaa;
-    height: 1px;
-}
-
-a {
-    color: #069;
-    text-decoration: underline;
-}
-
-a:hover {
-    text-decoration: none;
 }
 
 input {
@@ -83,11 +50,11 @@ option {
 
 #errorMsg {
     color: red;
+    font-weight: bold;
 }
 
 input[type=text],
 input[type=url],
-input[type=tel],
 input[type=number],
 input[type=color],
 input[type=date],
@@ -98,16 +65,6 @@ select {
     box-shadow: 1px 1px 2px #666;
     font-size: 16px;
     background-color: #fff;
-}
-
-.inputErrMsg {
-    position: absolute;
-    padding: 4px 8px;
-    color: #000;
-    background-color: #ffcccc;
-    border: 1px solid #ffaaaa;
-    white-space: nowrap;
-    display: inline-block;
 }
 
 .cbcontainer {
@@ -130,16 +87,6 @@ select {
     cursor: pointer;
     height: 0;
     width: 0;
-}
-
-.cbmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 16px;
-    width: 16px;
-    background-color: #fff;
-    border: 2px solid #336699;
 }
 
 .rbmark {
@@ -196,37 +143,6 @@ select {
     background: white;
 }
 
-.indollar {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="15px" height="20px"><text x="2" y="15" style="font: normal 16px arial;">$</text></svg>');
-    background-position: left center;
-    background-repeat: no-repeat no-repeat;
-    padding-left: 11px !important;
-}
-
-.inpct {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17px" height="20px"><text x="1" y="15" style="font: normal 16px arial;">%</text></svg>');
-    background-position: right center;
-    background-repeat: no-repeat no-repeat;
-    padding-right: 18px !important;
-}
-
-
-#headerout {
-    background: #003366;
-    text-align: center;
-}
-
-#header {
-    width: 1100px;
-    height: 60px;
-    background: #003366;
-    padding: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    overflow: hidden;
-}
-
 .resultDiv {
     padding-top: 50px;
 }
@@ -248,8 +164,6 @@ select {
     background-color: lightgrey;
     cursor: pointer;
 }
-
-
 
 #calcButton {
     border: 0px;
@@ -287,165 +201,12 @@ select {
     padding-top: 50px;
 }
 
-#contentbig {
-    padding: 0px 0px 15px 0px;
-    width: 843px;
-    float: right;
-}
-
-#footer {
-    background: #e1e1e1;
-    padding: 25px 0px;
-    font-size: 13px;
-    color: #555;
-    text-align: center;
-}
-
-#footer a {
-    color: #444;
-}
-
-#footer a:hover {
-    text-decoration: none;
-}
-
-#footerin {
-    width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-    overflow: auto;
-    color: #555;
-}
-
-#footernav {
-    text-align: center;
-}
-
-#homecaldiv {
-    background: #d1dde9;
-    padding: 10px 0px;
-}
-
-#homelistdiv {
-    background: #fff;
-    padding: 20px 0px;
-}
-
-#homecaldiv td {
-    overflow: hidden;
-}
-
-#homelistwrap {
-    display: grid;
-    grid-row-gap: 30px;
-    justify-content: center;
-    grid-template-columns: 280px 320px 260px 220px;
-}
-
-#breadcrumbs,
-#breadcrumbs span {
-    font-size: 13px;
-}
-
-#breadcrumbs a,
-#breadcrumbs a span {
-    text-decoration: none;
-    color: #069;
-}
-
-#breadcrumbs a:hover,
-#breadcrumbs a span:hover {
-    text-decoration: underline;
-}
-
-#othercalc {
-    border: solid 1px #336699;
-    margin: auto;
-    text-align: left;
-    width: 332px;
-}
-
-#octitle {
-    background-color: #336699;
-    padding: 6px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-}
-
 #octitle a {
     color: #fff;
     text-decoration: none;
 }
 
 #octitle a:hover {
-    text-decoration: underline;
-}
-
-#occontent {
-    padding: 3px 6px;
-    font-size: 14px;
-}
-
-#occontent a {
-    display: inline-block;
-    width: 158px;
-    padding: 3px 0px;
-}
-
-#ocother {
-    background-color: #ddd;
-    padding: 6px;
-    text-align: center;
-    font-size: 15px;
-    color: #bbb;
-}
-
-#sectitle {
-    background-color: #336699;
-    padding: 6px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.hicon {
-    padding: 20px 0px 20px 10px;
-}
-
-.hl {
-    list-style-type: none;
-    margin: 0px;
-    padding: 5px 0 5px 8px;
-    background-color: #fff;
-    font-size: 16px;
-}
-
-.hl li {
-    padding: 0 0 8px 0;
-}
-
-.hl li a {
-    text-decoration: none;
-}
-
-.hl li a:hover {
-    text-decoration: underline;
-}
-
-.hh {
-    color: #23832b;
-    padding: 8px 5px;
-    font-size: 22px;
-}
-
-.hh a {
-    color: #23832b;
-    text-decoration: none;
-}
-
-.hh a:hover {
     text-decoration: underline;
 }
 
@@ -463,26 +224,6 @@ select {
 
 .smtbtop a:hover {
     text-decoration: underline;
-}
-
-.smalltext {
-    font-size: 13px;
-}
-
-.bigtext {
-    font-size: 18px;
-}
-
-.verybigtext {
-    font-size: 23px;
-}
-
-.morelinespace {
-    line-height: 125%
-}
-
-.inlinetable {
-    display: inline;
 }
 
 table.cinfoT {
@@ -531,22 +272,6 @@ table.cinfoTS td {
     padding: 3px 1px;
 }
 
-.frac {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.fracnum {
-    display: block;
-}
-
-.fracden {
-    display: block;
-    border-top: 1px solid #000;
-    padding: 0px 3px;
-}
-
 #topmenu ul {
     color: #000;
     border-bottom: 1px solid #bbbbbb;
@@ -592,135 +317,10 @@ table.cinfoTS td {
     background: #eee;
 }
 
-#insmd {
-    background-color: #336699;
-    margin-bottom: 3px;
-}
-
-#insmdc {
-    background-color: #336699;
-    margin-bottom: 3px;
-    text-align: center;
-}
-
-fieldset {
-    margin-top: 10px;
-    padding: 0px 10px 5px 10px;
-    border: solid 0px #bdd2da;
-    background: #eee;
-    color: #eee;
-}
-
-legend {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 5px 15px;
-    background: #eee;
-    color: #000;
-}
-
-fieldset a {
-    display: inline-block;
-    white-space: nowrap;
-    padding: 6px;
-    font-size: 16px;
-    background: #336699;
-    color: #fff;
-    margin-bottom: 5px;
-    text-decoration: none;
-}
-
-fieldset a:hover {
-    background: #417516;
-    color: #fff;
-}
-
-fieldset div {
-    display: inline-block;
-    white-space: nowrap;
-    padding: 10px;
-    font-size: 18px;
-    background: #044284;
-    color: #fff;
-    margin-bottom: 5px;
-    border-radius: 3px;
-    text-decoration: none;
-}
-
-fieldset div:hover {
-    background: #c47751;
-    color: #fff;
-}
-
-.arrow_box {
-    position: relative;
-    background: #eee;
-    border: 1px solid #aaa;
-    padding: 3px 8px;
-    text-align: center;
-}
-
-.arrow_box:after,
-.arrow_box:before {
-    left: 100%;
-    top: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.arrow_box:after {
-    border-color: rgba(221, 221, 221, 0);
-    border-left-color: #eee;
-    border-width: 12px;
-    margin-top: -12px;
-}
-
-.arrow_box:before {
-    border-color: rgba(238, 238, 238, 0);
-    border-left-color: #aaa;
-    border-width: 13px;
-    margin-top: -13px;
-}
-
-.result_box {
-    background: #e3edda;
-    border: 1px solid #8db46d;
-    padding: 3px 8px;
-    text-align: center;
-}
-
 .panel {
     background: #eee;
     border: solid 1px #bbbbbb;
     padding: 5px;
-}
-
-.panel2 {
-    background-color: #eeeeee;
-    padding: 5px;
-    border-right: 1px solid #bbbbbb;
-    border-bottom: 1px solid #bbbbbb;
-    border-left: 1px solid #bbbbbb;
-}
-
-.reference {
-    font-size: 13px;
-    padding-left: 1.8em;
-}
-
-.reference li {
-    font-size: 13px;
-    word-wrap: break-word;
-}
-
-#printit {
-    width: 80px;
-    float: right;
-    text-align: right;
 }
 
 .h2result {
@@ -733,66 +333,11 @@ fieldset div:hover {
     font-weight: bold;
 }
 
-.h3head {
-    margin-bottom: 2px;
-}
-
 .sectionlists div {
     padding-bottom: 5px;
 }
 
-#searchbox {
-    padding-top: 16px;
-}
-
-#bluebtn {
-    border-radius: 1px;
-    background: #336699;
-    padding: 5px 8px;
-    font-size: 18px;
-    color: #fff;
-}
-
-#bluebtn:hover {
-    background: #444;
-    color: #fff;
-}
-
-#calcSearchOut {
-    padding: 5px;
-}
-
-#calcSearchOut div {
-    padding: 5px;
-    text-align: left;
-}
-
-.leftinput {
-    width: 325px;
-    float: left;
-}
-
-.rightresult {
-    width: 375px;
-    float: right;
-}
-
-.clefthalf {
-    width: 350px;
-    float: left;
-}
-
-.crighthalf {
-    width: 350px;
-    float: right;
-}
-
 @media (max-width:1100px) {
-    #header {
-        width: 990px;
-        padding-left: 8px;
-    }
-
     #right{
         float:none;
         padding-left: 10px
@@ -807,42 +352,9 @@ fieldset div:hover {
         float: left;
         padding-left: 10px;
     }
-
-    #footerin {
-        width: 990px;
-    }
-
-    #homelistwrap {
-        display: grid;
-        grid-row-gap: 30px;
-        grid-template-columns: 270px 300px 220px 210px;
-    }
-
-    .leftinput,
-    .clefthalf,
-    .crighthalf {
-        width: 310px;
-    }
-
-    .rightresult {
-        width: 320px;
-    }
-
-    .leftchart {
-        width: 445px;
-    }
-
-    .rightpie {
-        width: 155px;
-    }
 }
 
 @media (max-width:720px) {
-    #header {
-        width: auto;
-        padding: 0px 8px;
-    }
-
     #contentout {
         width: auto;
         padding: 8px;
@@ -854,49 +366,9 @@ fieldset div:hover {
         padding: 0px;
     }
 
-    #homelistwrap {
-        grid-template-columns: 320px 320px;
-    }
-
     #right {
         width: auto;
         float: none;
     }
 
-    #footerin {
-        width: auto;
-    }
-
-    .topNavAbs {
-        display: none;
-    }
-
-    .espaceforM {
-        display: block;
-    }
-}
-
-@media (max-width:650px) {
-    #homelistwrap {
-        grid-template-columns: 250px 250px;
-    }
-
-    .leftinput,
-    .rightresult,
-    .clefthalf,
-    .crighthalf {
-        width: auto;
-        float: none;
-    }
-
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-}
-
-@media (max-width:490px) {
-    #homelistwrap {
-        grid-template-columns: auto;
-    }
 }
