@@ -15,6 +15,7 @@ function clearForm(formObj) {
     document.getElementById("resultTotalHosts").innerText = "";
     document.getElementById("resultUsableHosts").innerText = "";
     document.getElementById("errorMsg").innerHTML = "";
+    document.getElementById("resultType").innerText = "";
 }
 
 csubnet = '30'
@@ -52,10 +53,21 @@ function binaryToIP(binary) {
     return binary.match(/.{8}/g).map(bin => parseInt(bin, 2)).join('.');
 }
 
+function checkPrivateIP(ip) {
+    let parts = ip.split(".").map(Number);
+    if ((parts[0] === 10) || 
+        (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31) || 
+        (parts[0] === 192 && parts[1] === 168)) {
+        return true;
+    }
+    return false;
+}
+
 function calculateSubnet() {
     document.getElementById("errorMsg").innerHTML = "";
     let ip = document.getElementById("cip").value;
     let subnetBits = parseInt(csubnet);
+    let isPrivate = checkPrivateIP(ip);
     
     if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
         document.getElementById("errorMsg").innerHTML = "Invalid IP Address";
@@ -65,6 +77,7 @@ function calculateSubnet() {
         document.getElementById("resultBroadcast").innerText = "";
         document.getElementById("resultTotalHosts").innerText = "";
         document.getElementById("resultUsableHosts").innerText = "";
+        document.getElementById("resultType").innerText = "";
         return;
     }
     
@@ -86,6 +99,8 @@ function calculateSubnet() {
     document.getElementById("resultBroadcast").innerText = broadcastAddress;
     document.getElementById("resultTotalHosts").innerText = totalHosts;
     document.getElementById("resultUsableHosts").innerText = usableHosts;
+    document.getElementById("resultType").innerText = isPrivate ? "Private" : "Public";
 }
+
 
 popSubnet('any');
