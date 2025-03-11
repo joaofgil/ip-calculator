@@ -143,8 +143,8 @@ select {
     background: white;
 }
 
-.resultDiv {
-    padding-top: 50px;
+.resultDiv, .supernetResult {
+    padding-top: 25px;
 }
 
 .max-width-table, #csubnet, .inlonger{
@@ -153,6 +153,7 @@ select {
 
 .td-2 {
     min-width: 50%;
+    width: 50%;
 }
 
 #clearButton {

@@ -33,7 +33,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Subnet</td>
+                                    <td>Netmask</td>
                                     <td>
                                         <select name="csubnet" id="csubnet" onchange="return setSubnetV(this.value);">
                                             <option value="32">255.255.255.255 /32</option>
@@ -78,6 +78,12 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td>Netmask for sub/supernet</td>
+                                    <td>
+                                        <input type="number" min="1" max="30" name="cnetmask" id="cnetmask" value="" class="inlonger">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan="2" align="right" style="padding-top: 8px;">
                                         <button type="button" id="calcButton" onclick="calculateSubnet()">Calculate</button>
                                         <button type="button" id="clearButton"  onclick="clearForm(document.calform);">Clear</button>
@@ -102,7 +108,7 @@
                                 <td class="td-2" id="resultIP"></td>
                             </tr>
                             <tr>
-                                <td>Network Address:</td>
+                                <td>Network:</td>
                                 <td class="td-2"  id="resultNetwork"></td>
                             </tr>
                             <tr>
@@ -127,6 +133,8 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="supernetResult"></div>
+                    <div class="subnetResult"></div>
                 </div>
             </div>
             <div id="right"> 

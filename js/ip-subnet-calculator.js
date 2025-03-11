@@ -16,9 +16,11 @@ function clearForm(formObj) {
     document.getElementById("resultUsableHosts").innerText = "";
     document.getElementById("errorMsg").innerHTML = "";
     document.getElementById("resultType").innerText = "";
+    document.querySelector(".supernetResult").innerHTML = "";
+    document.querySelector(".subnetResult").innerHTML = "";
 }
 
-csubnet = '30'
+csubnet = '24'
 function setSubnetV(inval) {
     csubnet = inval;
     return false;
@@ -45,8 +47,11 @@ function popSubnet(inval) {
     }
 }
 
-function ipToBinary(ip) {
+function IPToBinary(ip) {
     return ip.split('.').map(octet => ('00000000' + parseInt(octet, 10).toString(2)).slice(-8)).join('');
+}
+function getNetmask(cidr) {
+    return binaryToIP('1'.repeat(cidr).padEnd(32, '0'));
 }
 
 function binaryToIP(binary) {
@@ -65,10 +70,13 @@ function checkPrivateIP(ip) {
 
 function calculateSubnet() {
     document.getElementById("errorMsg").innerHTML = "";
+    document.querySelector(".supernetResult").innerHTML = "";
+    document.querySelector(".subnetResult").innerHTML = "";
     let ip = document.getElementById("cip").value;
     let subnetBits = parseInt(csubnet);
     let isPrivate = checkPrivateIP(ip);
-    
+    let netmaskToMove = document.getElementById("cnetmask").value;
+
     if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(ip)) {
         document.getElementById("errorMsg").innerHTML = "Invalid IP Address";
         document.getElementById("resultIP").innerText = "";
@@ -78,10 +86,26 @@ function calculateSubnet() {
         document.getElementById("resultTotalHosts").innerText = "";
         document.getElementById("resultUsableHosts").innerText = "";
         document.getElementById("resultType").innerText = "";
+        document.querySelector(".supernetResult").innerHTML = "";
+        document.querySelector(".subnetResult").innerHTML = "";
         return;
     }
     
-    let ipBinary = ipToBinary(ip);
+    if (netmaskToMove !== "" && (isNaN(netmaskToMove) || netmaskToMove < 1 || netmaskToMove > 30)) {
+        document.getElementById("errorMsg").innerHTML = "Enter a valid netmask between 1 and 30";
+        document.getElementById("resultIP").innerText = "";
+        document.getElementById("resultNetwork").innerText = "";
+        document.getElementById("resultHostRange").innerText = "";
+        document.getElementById("resultBroadcast").innerText = "";
+        document.getElementById("resultTotalHosts").innerText = "";
+        document.getElementById("resultUsableHosts").innerText = "";
+        document.getElementById("resultType").innerText = "";
+        document.querySelector(".supernetResult").innerHTML = "";
+        document.querySelector(".subnetResult").innerHTML = "";
+        return;
+    }
+    
+    let ipBinary = IPToBinary(ip);
     let networkBinary = ipBinary.slice(0, subnetBits) + '0'.repeat(32 - subnetBits);
     let broadcastBinary = ipBinary.slice(0, subnetBits) + '1'.repeat(32 - subnetBits);
     
@@ -93,8 +117,16 @@ function calculateSubnet() {
     let firstUsable = totalHosts > 2 ? binaryToIP((BigInt('0b' + networkBinary) + 1n).toString(2).padStart(32, '0')) : "N/A";
     let lastUsable = totalHosts > 2 ? binaryToIP((BigInt('0b' + broadcastBinary) - 1n).toString(2).padStart(32, '0')) : "N/A";
 
+    if(isNumber(netmaskToMove)){
+        if(csubnet>Number(netmaskToMove)){
+            calculateSupernet(ip,netmaskToMove);
+        }else if (csubnet<Number(netmaskToMove)){
+            calculateSubnets(ip,csubnet,netmaskToMove);
+        }
+    }
+
     document.getElementById("resultIP").innerText = ip;
-    document.getElementById("resultNetwork").innerText = networkAddress;
+    document.getElementById("resultNetwork").innerText = networkAddress+"/"+csubnet;
     document.getElementById("resultHostRange").innerText = `${firstUsable} - ${lastUsable}`;
     document.getElementById("resultBroadcast").innerText = broadcastAddress;
     document.getElementById("resultTotalHosts").innerText = totalHosts;
@@ -102,5 +134,103 @@ function calculateSubnet() {
     document.getElementById("resultType").innerText = isPrivate ? "Private" : "Public";
 }
 
+function calculateSupernet(ip, newMask) {
+    
 
+    function getNetworkAddress(ip, cidr) {
+        let binaryIp = IPToBinary(ip);
+        let networkBinary = binaryIp.substring(0, cidr).padEnd(32, '0');
+        return binaryToIP(networkBinary);
+    }
+
+    function getBroadcastAddress(networkIp, cidr) {
+        let binaryNet = IPToBinary(networkIp);
+        let broadcastBinary = binaryNet.substring(0, cidr).padEnd(32, '1');
+        return binaryToIP(broadcastBinary);
+    }
+
+    let network = getNetworkAddress(ip, newMask);
+    let broadcast = getBroadcastAddress(network, newMask);
+    let hostMin = binaryToIP((IPToBinary(network).slice(0, 31) + '1'));
+    let hostMax = binaryToIP((IPToBinary(broadcast).slice(0, 31) + '0'));
+    let netmask = getNetmask(newMask);
+    let totalHosts = Math.pow(2, (32 - newMask)) - 2;
+    let usableHosts = totalHosts - 2;
+    let tableHTML = `
+        <h2 class="h2result">Supernet</h2>
+        <table class="cinfoT max-width-table">
+            <tbody>
+                <tr><td>IP Address:</td><td class="td-2">${ip}</td></tr>
+                <tr><td>Network:</td><td class="td-2">${network}/${newMask}</td></tr>
+                <tr><td>Usable Host IP Range:</td><td class="td-2">${hostMin} - ${hostMax}</td></tr>
+                <tr><td>Broadcast Address:</td><td class="td-2">${broadcast}</td></tr>
+                <tr><td>Total Number of Hosts:</td><td class="td-2">${totalHosts}</td></tr>
+                <tr><td>Number of Usable Hosts:</td><td class="td-2">${usableHosts}</td></tr>
+            </tbody>
+        </table>
+    `;
+
+    document.querySelector(".supernetResult").innerHTML = tableHTML;
+
+    return {
+        Original_IP: ip,
+        New_CIDR: `/${newMask}`,
+        Netmask: netmask,
+        Network: network,
+        Broadcast: broadcast,
+        HostMin: hostMin,
+        HostMax: hostMax,
+        HostsPerNet: totalHosts
+    };
+}
+
+function calculateSubnets(ip, oldMask, newMask) {
+
+    function getSubnetList(network, oldMask, newMask) {
+        let totalSubnets = Math.pow(2, newMask - oldMask);
+        let subnetSize = Math.pow(2, 32 - newMask);
+        let subnets = [];
+
+        let baseBinary = IPToBinary(network).substring(0, oldMask);
+        for (let i = 0; i < totalSubnets; i++) {
+            let subnetBinary = baseBinary + ('00000000000000000000000000000000' + (i * subnetSize).toString(2)).slice(- (32 - oldMask));
+            let subnetIP = binaryToIP(subnetBinary);
+            let broadcastIP = getBroadcastAddress(subnetIP, newMask);
+            let hostMin = binaryToIP(IPToBinary(subnetIP).slice(0, 31) + '1');
+            let hostMax = binaryToIP(IPToBinary(broadcastIP).slice(0, 31) + '0');
+            subnets.push({ network: subnetIP, broadcast: broadcastIP, hostMin, hostMax, hosts: subnetSize - 2 });
+        }
+
+        return subnets;
+    }
+
+    function getBroadcastAddress(networkIp, cidr) {
+        let binaryNet = IPToBinary(networkIp);
+        let broadcastBinary = binaryNet.substring(0, cidr).padEnd(32, '1');
+        return binaryToIP(broadcastBinary);
+    }
+
+    let network = binaryToIP(IPToBinary(ip).substring(0, oldMask).padEnd(32, '0'));
+    let netmask = getNetmask(newMask);
+    let subnets = getSubnetList(network, oldMask, newMask);
+
+    let tableHTML = `
+        <h2 class="h2result">Subnets</h2>
+        ${subnets.map(subnet => `
+            <table class="cinfoT max-width-table">
+                <tbody>
+                    <tr><td>Network:</td><td class="td-2">${subnet.network}/${newMask}</td></tr>
+                    <tr><td>Usable Host IP Range:</td><td class="td-2">${subnet.hostMin} - ${subnet.hostMax}</td></tr>
+                    <tr><td>Broadcast Address:</td><td class="td-2">${subnet.broadcast}</td></tr>
+                    <tr><td>Total Number of Hosts:</td><td class="td-2">${subnet.hosts}</td></tr>          
+                </tbody>
+            </table>
+            <p></p>
+        `).join('')}
+    `;
+
+    document.querySelector(".subnetResult").innerHTML = tableHTML;
+
+    return subnets;
+}
 popSubnet('any');
