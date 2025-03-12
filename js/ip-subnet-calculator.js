@@ -215,7 +215,7 @@ function calculateSubnets(ip, oldMask, newMask) {
     let subnets = getSubnetList(network, oldMask, newMask);
 
     let tableHTML = `
-        <h2 class="h2result">Subnets</h2>
+        <h2 class="h2result">${subnets.length} Subnets</h2>
         ${subnets.map(subnet => `
             <table class="cinfoT max-width-table">
                 <tbody>
